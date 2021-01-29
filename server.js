@@ -1,13 +1,5 @@
 // Dependencies
-var express = require("express");
 var mysql = require("mysql");
-
-// Create express app instance.
-var app = express();
-
-// Sets the port of the application
-// process.env.PORT lets the port be set by Heroku
-var PORT = process.env.PORT || 8080;
 
 // MySQL DB Connection Information
 var connection = mysql.createConnection({
