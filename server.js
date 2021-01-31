@@ -54,6 +54,14 @@ function userSelection() {
         case "Add Role":
           addRole();
           break;
+
+        case "Add Employee":
+          addEmployee();
+          break;
+
+        case "Update Employee Role":
+          updateEmployeeRole();
+          break;
       }
     });
 }
@@ -155,32 +163,46 @@ function addRole() {
   })
 }
 
-// function addRole() {
-//   connection.query("SELECT role.title AS Title, role.salary AS Salary FROM role", function(err, res) {
-//   inquirer.prompt([
-//     {
-//     name: "title",
-//     type: "input",
-//     message: "What is the name of the role?"
-//   },
-//   {
-//     name: "Salary",
-//     type: "input",
-//     message: "What is the salary of this role?"
-//   }
-//   ]).then(function(res) {
-//     connection.query(
-//       "INSERT INTO role SET ?",
-//       {
-//         title: res.Title,
-//         salary: res.Salary,
-//       },
-//       function(err) {
-//         if (err) throw err
-//         console.table(res);
-//         userSelection();
-//       }
-//     )
-//   });
-// });
-// }
+function addEmployee() {
+  let roles = [];
+  connection.query("SELECT * FROM employee",
+  function(err, res) {
+    if (err) throw err;
+    for (let i = 0; i < res.length; i++) {
+      res[i].first_name + " " + res[i].last_name
+      roles.push({ name: res[i].name, value: res[i].id});
+    }
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "first_name",
+      message: "What is the employees first name?"
+  },
+  {
+    type: "input",
+    name: "last_name",
+    message: "What is the employees last name?"
+},
+{
+  type: "list",
+  name: "role_name",
+  message: "What is the employees role?",
+  choices: title
+}
+  ]).then(function(res) {
+    const query = connection.query(
+      "INSERT INTO employee SET ?",
+      {
+        first_name: res.first_name,
+        last_name: res.last_name,
+        role_name: res.title
+      },
+      function(err, res) {
+        if (err) throw err;
+        userSelection();
+      }
+    )
+  })
+})
+}
+
