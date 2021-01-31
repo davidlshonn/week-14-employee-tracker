@@ -165,12 +165,12 @@ function addRole() {
 
 function addEmployee() {
   let roles = [];
-  connection.query("SELECT * FROM employee",
+  connection.query("SELECT * FROM role",
   function(err, res) {
     if (err) throw err;
     for (let i = 0; i < res.length; i++) {
       res[i].first_name + " " + res[i].last_name
-      roles.push({ name: res[i].name, value: res[i].id});
+      roles.push({ name: res[i].title, value: res[i].id});
     }
   inquirer.prompt([
     {
@@ -185,17 +185,18 @@ function addEmployee() {
 },
 {
   type: "list",
-  name: "role_name",
+  name: "role_id",
   message: "What is the employees role?",
-  choices: title
+  choices: roles
 }
   ]).then(function(res) {
+    console.log(res)
     const query = connection.query(
       "INSERT INTO employee SET ?",
       {
         first_name: res.first_name,
         last_name: res.last_name,
-        role_name: res.title
+        role_id: res.role_id,
       },
       function(err, res) {
         if (err) throw err;
@@ -206,3 +207,11 @@ function addEmployee() {
 })
 }
 
+// function updateEmployeeRole() {
+//   connection.query("SELECT first_name, last_name, id FROM employee",
+//   function(err, res) {
+    
+//   })
+// }
+
+// // 
