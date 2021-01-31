@@ -29,9 +29,8 @@ function userSelection() {
         "View all Employees By Department",
         "Add Employee",
         "Add Department",
-        "Remove Employee",
+        "Add Role",
         "Update Employee Role",
-        "Update Employee Manager",
       ],
     })
     .then(function (answer) {
@@ -50,6 +49,10 @@ function userSelection() {
 
         case "Add Department":
           addDepartment();
+          break;
+        
+        case "Add Role":
+          addRole();
           break;
       }
     });
@@ -96,7 +99,7 @@ function addDepartment() {
       message: "What is the name of the Department you would like to add?"
     }
   ]).then(function(res) {
-    var query = connection.query(
+    const query = connection.query(
       "INSERT INTO department SET ? ",
       {
         name: res.name
@@ -109,3 +112,75 @@ function addDepartment() {
     )
   })
 }
+
+function addRole() {
+  let departments = [];
+  connection.query("SELECT * FROM department",
+  function(err, res) {
+    if (err) throw err;
+    for (let i = 0; i < res.length; i++) {
+      res[i].first_name + " " + res[i].last_name
+      departments.push({ name: res[i].name, value: res[i].id});
+    }
+    inquirer.prompt([
+      {
+        type: "input",
+        name: "title",
+        message: "What is the role you would like to add?"
+    },
+    {
+        type: "input",
+        name: "salary",
+        message: "What is the salary for said role?"
+    },
+    {
+        type: "list",
+        name: "department",
+        message: "what department?",
+        choices: departments
+    }
+  ]).then(function(res) {
+    const query = connection.query(
+      "INSERT INTO role SET ?", {
+        title: res.title,
+        salary: res.salary,
+        department_id: res.department
+      },
+      function(err, res) {
+        if (err) throw err;
+        userSelection();
+      }
+    )
+  })
+  })
+}
+
+// function addRole() {
+//   connection.query("SELECT role.title AS Title, role.salary AS Salary FROM role", function(err, res) {
+//   inquirer.prompt([
+//     {
+//     name: "title",
+//     type: "input",
+//     message: "What is the name of the role?"
+//   },
+//   {
+//     name: "Salary",
+//     type: "input",
+//     message: "What is the salary of this role?"
+//   }
+//   ]).then(function(res) {
+//     connection.query(
+//       "INSERT INTO role SET ?",
+//       {
+//         title: res.Title,
+//         salary: res.Salary,
+//       },
+//       function(err) {
+//         if (err) throw err
+//         console.table(res);
+//         userSelection();
+//       }
+//     )
+//   });
+// });
+// }
