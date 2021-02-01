@@ -10,4 +10,4 @@ A solution for managing a company's employees using node, inquirer, and MySQL. T
 
 ## Application Walk-Through
 
-[<img src="Assets\app-capture.JPG">](https://drive.google.com/file/d/1grYjwergQfQwt6IM0hF-JWFhomQAFyCN/view)
+[<img src="Assets\Application-Capture.JPG">](https://drive.google.com/file/d/1caM5CQQp-RtOSnLn2CKZFmWOaDyQRlmW/view)
