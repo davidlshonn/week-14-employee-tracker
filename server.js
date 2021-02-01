@@ -1,6 +1,7 @@
 // Dependencies
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+// const cTable = require('console.table');
 
 // MySQL DB Connection Information
 var connection = mysql.createConnection({
@@ -220,6 +221,12 @@ function updateEmployeeRole() {
         name: employee.first_name + " " + employee.last_name,
         value: employee.id,
       }));
+      // connection.query("SELECT title, id FROM role"),
+      // function (err, res) {
+      //   let roles = res.map((role) => ({
+      //     name: role.title + " " + role.id,
+      //     value: employee.id,
+      // }
       inquirer
         .prompt([
           {

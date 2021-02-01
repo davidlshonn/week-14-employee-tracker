@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/davidlshonn/week-14-employee-tracker#readme",
   "dependencies": {
+    "console.table": "^0.10.0",
     "expres": "0.0.5",
     "express": "^4.17.1",
     "inquirer": "^7.3.3",
